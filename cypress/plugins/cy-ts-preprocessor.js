@@ -8,18 +8,37 @@ const webpackOptions = {
     rules: [
       {
         test: /\.ts$/,
-        loaders: ['ts-loader', 'angular2-template-loader'],
+        use: [{
+          loader: 'ts-loader',
+          options: {
+            transpileOnly: true
+          }
+        }, {
+          loader: 'angular2-template-loader?keepUrl=true'
+        }],
         exclude: [/node_modules/],
       },
       {
-        test: /\.(html|css)$/,
-        loader: 'raw-loader',
-        exclude: /\.async\.(html|css)$/
+        test: /\.(css)$/,
+        loaders: ['to-string-loader', 'css-loader']
       },
       {
-        test: /\.async\.(html|css)$/,
-        loaders: ['file?name=[name].[hash].[ext]', 'extract']
-      }
+        test: /\.(html)$/,
+        loader: 'raw-loader'
+      },
+      // {
+      //   test: /\.async\.(html)$/,
+      //   loaders: ['file?name=[name].[hash].[ext]', 'extract']
+      // }
+      // {
+      //   test: /\.(html|css)$/,
+      //   loader: 'raw-loader',
+      //   exclude: /\.async\.(html|css)$/
+      // },
+      // {
+      //   test: /\.async\.(html|css)$/,
+      //   loaders: ['file?name=[name].[hash].[ext]', 'extract']
+      // }
     ]
   }
 }
